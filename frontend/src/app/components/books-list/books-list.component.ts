@@ -16,11 +16,23 @@ export class BooksListComponent implements OnInit {
 
   books$: Observable<Page<Book> | Error>;
   bookList = new MatTableDataSource();
-  columns: string[] = ["title", "author", "year", "status"]
+  columns: string[] = ["title", "author", "year", "status", "edit"]
   bookStatuses: string[] = ['AVAILABLE', 'BORROWED', 'RETURNED', 'DAMAGED', 'PROCESSING']
+  pageIndex: number = 0;
+  paginatorInfo$;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
+  getPageDetails(event: any) {
+    this.pageIndex = event.pageIndex
+    console.log(this.pageIndex)
+    this.books$ = this.bookService.getBooks({pageIndex: this.pageIndex})
+    this.books$.subscribe((result) => {
+      this.paginatorInfo$ = result;
+      this.bookList.data = result.content;
+    });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -37,9 +49,10 @@ export class BooksListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.books$ = this.bookService.getBooks({});
+    this.books$ = this.bookService.getBooks({pageIndex: this.pageIndex});
     this.books$.subscribe((result) => {
-      console.log(result.content)
+      this.paginatorInfo$ = result;
+      console.log(result)
       this.bookList.data = result.content;
     });
   }

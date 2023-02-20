@@ -10,6 +10,7 @@ import {BookDetailComponent} from './components/book-detail/book-detail.componen
 import {HttpClientModule} from '@angular/common/http';
 import {CheckoutsListComponent} from "./components/checkouts-list/checkouts-list.component";
 
+
 @NgModule({
   declarations: [
     AppComponent,

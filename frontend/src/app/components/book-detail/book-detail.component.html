@@ -1,1 +1,23 @@
 <pre>{{book$ | async | json}}</pre>
+<div class="container mat-elevation-z4">
+  <mat-card *ngIf="(book$ | async) as book">
+    <mat-card-title>{{book.title}} </mat-card-title>
+    <mat-card-content>
+      <div class="bookDetails"><b>Author:</b> {{book.author}}</div>
+      <div class="bookDetails"><b>Genre:</b> {{book.genre}}</div>
+      <div class="bookDetails"><b>Year:</b> {{book.year}}</div>
+      <div class="bookDetails"><b>Added:</b> {{book.added}}</div>
+      <div class="bookDetails"><b>Checkouts:</b> {{book.checkOutCount}}</div>
+      <div class="bookDetails"><b>Status:</b> {{book.status}}</div>
+      <div class="bookDetails"><b>Due date:</b> {{book.dueDate}}</div>
+      <div *ngIf="(book.status === 'AVAILABLE')">
+        <button (click)="openDeleteDialog(book.id)" class="bookDetails" color="warn" mat-flat-button>Delete</button>
+      </div>
+      <div *ngIf="(book.status !== 'AVAILABLE')">
+        <button class="bookDetails" color="warn" disabled mat-flat-button>Delete</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+

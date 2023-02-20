@@ -17,9 +17,20 @@ export class CheckoutsListComponent implements OnInit {
   checkouts$: Observable<Page<Checkout> | Error>;
   checkoutList = new MatTableDataSource();
   columns: string[] = ["borrowerFirstName", "borrowerLastName", "bookTitle", "checkoutDate", "dueDate", "returnDate"]
-
+  pageIndex: number = 0;
+  paginatorInfo$;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
+  getPageDetails(event: any) {
+    this.pageIndex = event.pageIndex
+    console.log(this.pageIndex)
+    this.checkouts$ = this.checkoutService.getCheckouts({pageIndex: this.pageIndex})
+    this.checkouts$.subscribe((result) => {
+      this.paginatorInfo$ = result;
+      this.checkoutList.data = result.content;
+    });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -33,9 +44,10 @@ export class CheckoutsListComponent implements OnInit {
 
   ngOnInit(): void {
     // TODO this observable should emit books taking into consideration pagination, sorting and filtering options.
-    this.checkouts$ = this.checkoutService.getCheckouts({});
+    this.checkouts$ = this.checkoutService.getCheckouts({pageIndex: this.pageIndex});
     this.checkouts$.subscribe((result) => {
-      console.log(result.content)
+      this.paginatorInfo$ = result;
+      console.log(result)
       this.checkoutList.data = result.content;
     });
   }
