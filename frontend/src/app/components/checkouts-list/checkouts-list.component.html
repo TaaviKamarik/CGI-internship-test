@@ -1,0 +1,46 @@
+<div class="container mat-elevation-z4">
+  <mat-card>
+    <mat-card-title>Books</mat-card-title>
+    <mat-card-content>
+
+      <div *ngIf="(checkoutList != undefined)" class="tableClass">
+        <table [dataSource]="checkoutList" mat-table matSort>
+          <ng-container matColumnDef="borrowerFirstName">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> First Name</th>
+            <td *matCellDef="let checkout" mat-cell> {{checkout.borrowerFirstName}} </td>
+          </ng-container>
+          <ng-container matColumnDef="borrowerLastName">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Last Name</th>
+            <td *matCellDef="let checkout" mat-cell> {{checkout.borrowerLastName}} </td>
+          </ng-container>
+          <ng-container matColumnDef="bookTitle">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Book title</th>
+            <td *matCellDef="let checkout" mat-cell> {{checkout.borrowedBook.title}} </td>
+          </ng-container>
+          <ng-container matColumnDef="checkoutDate">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Checkout Date</th>
+            <td *matCellDef="let checkout" mat-cell> {{checkout.checkedOutDate}} </td>
+          </ng-container>
+          <ng-container matColumnDef="dueDate">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Due Date</th>
+            <td *matCellDef="let checkout" mat-cell> {{checkout.dueDate}} </td>
+          </ng-container>
+          <ng-container matColumnDef="returnDate">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Returned</th>
+            <td *matCellDef="let checkout" mat-cell> {{checkout.returnedDate}} </td>
+          </ng-container>
+
+          <tr *matHeaderRowDef="columns" mat-header-row></tr>
+          <tr *matRowDef="let row; columns: columns;" mat-row></tr>
+        </table>
+        <mat-paginator *ngIf="(checkoutList != undefined) as books"
+                       [pageSizeOptions]="[5, 10, 20]"
+                       [pageSize]="10"
+                       aria-label="Select page of periodic elements"
+                       showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
