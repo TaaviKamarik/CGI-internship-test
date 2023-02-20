@@ -2,7 +2,18 @@
   <mat-card>
     <mat-card-title>Books</mat-card-title>
     <mat-card-content>
-
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input #input (keyup)="applyFilter($event)" matInput>
+      </mat-form-field>
+      <mat-form-field class="dropdown-filter">
+        <mat-label>Filter by status</mat-label>
+        <mat-select #mySelect (valueChange)="applyStatusFilter(mySelect.value)">
+          <mat-option *ngFor="let bookStatus of bookStatuses" [value]="bookStatus">
+            {{bookStatus}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <div *ngIf="(bookList != undefined)" class="tableClass">
         <table [dataSource]="bookList" mat-table matSort>
           <ng-container matColumnDef="title">

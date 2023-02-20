@@ -1,7 +1,11 @@
 <div class="container mat-elevation-z4">
   <mat-card>
-    <mat-card-title>Books</mat-card-title>
+    <mat-card-title>Checkouts</mat-card-title>
     <mat-card-content>
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input #input (keyup)="applyFilter($event)" matInput>
+      </mat-form-field>
 
       <div *ngIf="(checkoutList != undefined)" class="tableClass">
         <table [dataSource]="checkoutList" mat-table matSort>

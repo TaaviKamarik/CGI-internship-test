@@ -17,10 +17,19 @@ export class BooksListComponent implements OnInit {
   books$: Observable<Page<Book> | Error>;
   bookList = new MatTableDataSource();
   columns: string[] = ["title", "author", "year", "status"]
+  bookStatuses: string[] = ['AVAILABLE', 'BORROWED', 'RETURNED', 'DAMAGED', 'PROCESSING']
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.bookList.filter = filterValue.trim().toLowerCase();
+  }
+
+  applyStatusFilter(value: string) {
+    this.bookList.filter = value.trim();
+  }
 
   constructor(
     private bookService: BookService,

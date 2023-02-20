@@ -21,6 +21,10 @@ export class CheckoutsListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.checkoutList.filter = filterValue.trim().toLowerCase();
+  }
 
   constructor(
     private checkoutService: CheckoutService,
