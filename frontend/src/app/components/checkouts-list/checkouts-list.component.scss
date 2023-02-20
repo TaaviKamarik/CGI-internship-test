@@ -1,0 +1,21 @@
+.container {
+  max-width: 1024px;
+  margin: 2em auto;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-cell:nth-child(-n+5) {
+  border-right: solid 1px black;
+  padding-left: 10px;
+}
+
+.mat-cell:nth-child(6) {
+  padding-left: 10px;
+}
+
+.mat-header-cell {
+  padding-left: 10px;
+}
