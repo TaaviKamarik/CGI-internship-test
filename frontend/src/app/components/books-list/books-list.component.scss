@@ -2,3 +2,20 @@
   max-width: 1024px;
   margin: 2em auto;
 }
+
+table {
+  width: 100%;
+}
+
+.mat-cell:nth-child(-n+3) {
+  border-right: solid 1px black;
+  padding-left: 10px;
+}
+
+.mat-cell:nth-child(4) {
+  padding-left: 10px;
+}
+
+.mat-header-cell {
+  padding-left: 10px;
+}

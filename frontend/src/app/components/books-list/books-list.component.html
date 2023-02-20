@@ -2,6 +2,37 @@
   <mat-card>
     <mat-card-title>Books</mat-card-title>
     <mat-card-content>
+
+      <div *ngIf="(bookList != undefined)" class="tableClass">
+        <table [dataSource]="bookList" mat-table matSort>
+          <ng-container matColumnDef="title">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Title</th>
+            <td *matCellDef="let book" mat-cell> {{book.title}} </td>
+          </ng-container>
+          <ng-container matColumnDef="author">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Author</th>
+            <td *matCellDef="let book" mat-cell> {{book.author}} </td>
+          </ng-container>
+          <ng-container matColumnDef="year">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Year</th>
+            <td *matCellDef="let book" mat-cell> {{book.year}} </td>
+          </ng-container>
+          <ng-container matColumnDef="status">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> Status</th>
+            <td *matCellDef="let book" mat-cell> {{book.status}} </td>
+          </ng-container>
+
+          <tr *matHeaderRowDef="columns" mat-header-row></tr>
+          <tr *matRowDef="let row; columns: columns;" mat-row></tr>
+        </table>
+        <mat-paginator *ngIf="(bookList != undefined) as books"
+                       [pageSizeOptions]="[5, 10, 20]"
+                       [pageSize]="10"
+                       aria-label="Select page of periodic elements"
+                       showFirstLastButtons>
+        </mat-paginator>
+      </div>
+
       <mat-nav-list *ngIf="(books$ | async) as books">
         <a mat-list-item *ngFor="let book of books.content" [routerLink]="['/books', book.id]">
           {{book.title}}
