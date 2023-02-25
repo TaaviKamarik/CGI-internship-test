@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>Check out book</h1>
+<div mat-dialog-content>
+  Insert book check out data?
+</div>
+<div>
+  <form>
+    <div>
+      <mat-form-field>
+        <mat-label>First Name</mat-label>
+        <input [(ngModel)]="data.firstName" matInput name="firstName" type="text">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Last Name</mat-label>
+        <input [(ngModel)]="data.lastName" class="lastName" matInput name="lastName" type="text">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Return date</mat-label>
+        <input [(ngModel)]="data.dueDate" class="dueDate" matInput name="lastName" type="date">
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+
+<div mat-dialog-actions>
+  <button (click)="onNoClick()" color="warn" mat-dialog-close mat-flat-button>Cancel</button>
+
+  <button (click)="checkoutBook()" *ngIf="data.firstName && data.lastName && data.dueDate" color="accent"
+          mat-dialog-close mat-flat-button>Yes
+  </button>
+  <button *ngIf="!data.firstName || !data.lastName || !data.dueDate" color="accent" disabled mat-dialog-close
+          mat-flat-button>Yes
+  </button>
+</div>

@@ -28,7 +28,7 @@ export class CheckoutsListComponent implements OnInit {
     this.checkouts$ = this.checkoutService.getCheckouts({pageIndex: this.pageIndex})
     this.checkouts$.subscribe((result) => {
       this.paginatorInfo$ = result;
-      this.checkoutList.data = result.content;
+      this.checkoutList.data = this.paginatorInfo$.content;
     });
   }
 
@@ -48,7 +48,7 @@ export class CheckoutsListComponent implements OnInit {
     this.checkouts$.subscribe((result) => {
       this.paginatorInfo$ = result;
       console.log(result)
-      this.checkoutList.data = result.content;
+      this.checkoutList.data = this.paginatorInfo$.content;
     });
   }
 

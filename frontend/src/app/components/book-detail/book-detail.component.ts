@@ -8,9 +8,19 @@ import {Checkout} from "../../models/checkout";
 import {Page} from "../../models/page";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {CheckoutService} from "../../services/checkout.service";
+import {v4 as uuidv4} from "uuid";
 
 export interface DialogData {
   id: string;
+  book: Book;
+}
+
+export interface CheckoutDialogData {
+  firstName: string;
+  lastName: string;
+  book: Book;
+  dueDate: string;
 }
 
 @Component({
@@ -24,6 +34,7 @@ export class BookDetailComponent implements OnInit {
   checkouts: Checkout[] = [];
 
   id: string;
+  book: Book;
 
 
   constructor(
@@ -39,6 +50,13 @@ export class BookDetailComponent implements OnInit {
     });
   }
 
+  openCheckoutDialog(book: Book) {
+    const dialogRef = this.dialog.open(CheckoutDialog, {
+      data: {book: book}
+    });
+  }
+
+
   ngOnInit(): void {
     this.book$ = this.route.params
       .pipe(map(params => params.id))
@@ -49,7 +67,7 @@ export class BookDetailComponent implements OnInit {
 
 @Component({
   selector: 'delete-dialog',
-  templateUrl: 'delete-dialog.component.html',
+  templateUrl: 'dialogs/delete-dialog.component.html',
 })
 export class DeleteDialog {
 
@@ -76,6 +94,51 @@ export class DeleteDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+
 }
 
 
+@Component({
+  selector: 'checkout-dialog',
+  templateUrl: 'dialogs/checkout-dialog.component.html',
+})
+export class CheckoutDialog {
+
+  response: any;
+  newCheckout: Checkout
+  date: string;
+
+  constructor(
+    private _snackBar: MatSnackBar,
+    private checkoutService: CheckoutService,
+    public dialogRef: MatDialogRef<CheckoutDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: CheckoutDialogData,
+  ) {
+  }
+
+  checkoutBook() {
+    this.date = new Date().toJSON().slice(0, 10);
+    this.newCheckout = {
+      id: uuidv4(),
+      borrowerFirstName: this.data.firstName,
+      borrowerLastName: this.data.lastName,
+      borrowedBook: this.data.book,
+      checkedOutDate: this.date,
+      dueDate: this.data.dueDate,
+      returnedDate: null
+    }
+    this.response = this.checkoutService.saveCheckout(this.newCheckout);
+    this.response.subscribe(result => {
+      if (result == null) {
+        this._snackBar.open("Checkout added successfully", "Close", {duration: 3000});
+        this.dialogRef.close();
+      }
+    })
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}

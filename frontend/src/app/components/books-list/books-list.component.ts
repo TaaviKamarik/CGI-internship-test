@@ -30,8 +30,9 @@ export class BooksListComponent implements OnInit {
     this.books$ = this.bookService.getBooks({pageIndex: this.pageIndex})
     this.books$.subscribe((result) => {
       this.paginatorInfo$ = result;
-      this.bookList.data = result.content;
+      this.bookList.data = this.paginatorInfo$.content;
     });
+
   }
 
   applyFilter(event: Event) {
@@ -52,9 +53,10 @@ export class BooksListComponent implements OnInit {
     this.books$ = this.bookService.getBooks({pageIndex: this.pageIndex});
     this.books$.subscribe((result) => {
       this.paginatorInfo$ = result;
-      console.log(result)
-      this.bookList.data = result.content;
+      this.bookList.data = this.paginatorInfo$.content;
     });
+
+
   }
 
   ngAfterViewInit() {
