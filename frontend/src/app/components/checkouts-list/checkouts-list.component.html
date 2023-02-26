@@ -31,7 +31,13 @@
           </ng-container>
           <ng-container matColumnDef="returnDate">
             <th *matHeaderCellDef mat-header-cell mat-sort-header> Returned</th>
-            <td *matCellDef="let checkout" mat-cell> {{checkout.returnedDate}} </td>
+            <td *matCellDef="let checkout" mat-cell>
+              <div *ngIf="checkout.dueDate < todaysDate">
+                <mat-chip-list>
+                  <mat-chip color="warn" selected>Overdue</mat-chip>
+                </mat-chip-list>
+              </div>
+              {{checkout.returnedDate}} </td>
           </ng-container>
 
           <tr *matHeaderRowDef="columns" mat-header-row></tr>

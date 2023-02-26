@@ -11,6 +11,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {CheckoutsListComponent} from "./components/checkouts-list/checkouts-list.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatChipsModule} from "@angular/material/chips";
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {MatFormFieldModule} from "@angular/material/form-field";
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatChipsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

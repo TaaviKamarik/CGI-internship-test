@@ -18,6 +18,7 @@ export class CheckoutsListComponent implements OnInit {
   checkoutList = new MatTableDataSource();
   columns: string[] = ["borrowerFirstName", "borrowerLastName", "bookTitle", "checkoutDate", "dueDate", "returnDate"]
   pageIndex: number = 0;
+  todaysDate: string;
   paginatorInfo$;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -50,6 +51,8 @@ export class CheckoutsListComponent implements OnInit {
       console.log(result)
       this.checkoutList.data = this.paginatorInfo$.content;
     });
+
+    this.todaysDate = new Date().toJSON().slice(0, 10);
   }
 
   ngAfterViewInit() {
